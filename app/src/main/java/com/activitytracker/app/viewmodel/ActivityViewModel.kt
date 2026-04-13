@@ -36,18 +36,18 @@ class ActivityViewModel(application: Application) : AndroidViewModel(application
     }
     
     fun toggleShowArchived() {
-        _uiState.update { it.copy(showArchived = !it.showArchived) }
+        _uiState.value = _uiState.value.copy(showArchived = !_uiState.value.showArchived)
         loadActivities()
     }
     
     fun setSearchQuery(query: String) {
-        _uiState.update { it.copy(searchQuery = query) }
+        _uiState.value = _uiState.value.copy(searchQuery = query)
     }
     
     private fun loadActivities() {
         viewModelScope.launch {
             repository.getAllActivities(_uiState.value.showArchived).collect { activities ->
-                _uiState.update { it.copy(activities = activities) }
+                _uiState.value = _uiState.value.copy(activities = activities)
             }
         }
     }
@@ -56,7 +56,7 @@ class ActivityViewModel(application: Application) : AndroidViewModel(application
         viewModelScope.launch {
             val dateMillis = _selectedDate.value.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
             repository.getLogsByDate(dateMillis).collect { logs ->
-                _uiState.update { it.copy(logsForSelectedDate = logs) }
+                _uiState.value = _uiState.value.copy(logsForSelectedDate = logs)
             }
         }
     }
@@ -130,7 +130,7 @@ class ActivityViewModel(application: Application) : AndroidViewModel(application
         }
         
         val startMillis = startDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
-        val endMillis = endDate.atEndOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+        val endMillis = endDate.plusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
         
         val total = repository.getTotalByDateRange(activityId, startMillis, endMillis) ?: 0.0
         val uniqueDates = repository.getUniqueDates(activityId)
@@ -219,7 +219,7 @@ class ActivityViewModel(application: Application) : AndroidViewModel(application
     fun searchActivities(query: String) {
         viewModelScope.launch {
             repository.searchActivities(query).collect { activities ->
-                _uiState.update { it.copy(searchResults = activities) }
+                _uiState.value = _uiState.value.copy(searchResults = activities)
             }
         }
     }

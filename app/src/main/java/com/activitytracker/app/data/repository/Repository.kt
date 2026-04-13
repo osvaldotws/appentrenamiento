@@ -75,8 +75,8 @@ class ActivityRepository(context: Context) {
     
     // Export/Import data
     suspend fun exportData(context: Context): String {
-        val activities = getAllActivities(true).first()
-        val allLogs = getAllLogs().first()
+        val activities = activityDao.getAllActivities(true)
+        val allLogs = logDao.getAllLogsSync()
         
         val exportData = ExportData(activities = activities, logs = allLogs)
         return kotlinx.serialization.json.Json.encodeToString(ExportData.serializer(), exportData)
@@ -87,7 +87,8 @@ class ActivityRepository(context: Context) {
             val exportData = kotlinx.serialization.json.Json.decodeFromString(ExportData.serializer(), jsonData)
             
             // Clear existing data
-            getAllActivities(true).first().forEach { activityDao.deleteActivity(it) }
+            val existingActivities = activityDao.getAllActivities(true)
+            existingActivities.forEach { activity -> activityDao.deleteActivity(activity) }
             
             // Import activities and collect new IDs mapping
             val idMapping = mutableMapOf<Long, Long>()

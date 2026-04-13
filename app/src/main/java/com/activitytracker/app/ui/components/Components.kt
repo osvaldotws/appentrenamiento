@@ -19,8 +19,6 @@ fun DatePickerDialog(
     onDateSelected: (LocalDate) -> Unit,
     onDismiss: () -> Unit
 ) {
-    var showDatePicker by remember { mutableStateOf(false) }
-    
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text("Seleccionar Fecha") },
@@ -30,10 +28,6 @@ fun DatePickerDialog(
                     text = selectedDate.format(DateTimeFormatter.ofPattern("EEEE, dd MMMM yyyy")),
                     style = MaterialTheme.typography.titleMedium
                 )
-                Spacer(modifier = Modifier.height(16.dp))
-                Button(onClick = { showDatePicker = true }) {
-                    Text("Cambiar Fecha")
-                }
             }
         },
         confirmButton = {
