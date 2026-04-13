@@ -35,6 +35,9 @@ interface ActivityDao {
     
     @Query("UPDATE activities SET sortOrder = :order WHERE id = :id")
     suspend fun updateSortOrder(id: Long, order: Int)
+    
+    @Query("SELECT * FROM activities WHERE isArchived = :showArchived ORDER BY sortOrder ASC, name ASC")
+    suspend fun getAllActivities(showArchived: Boolean = false): List<Activity>
 }
 
 @Dao
@@ -74,4 +77,7 @@ interface ActivityLogDao {
     
     @Query("SELECT DISTINCT date FROM activity_logs WHERE activityId = :activityId ORDER BY date DESC")
     suspend fun getUniqueDates(activityId: Long): List<Long>
+    
+    @Query("SELECT * FROM activity_logs ORDER BY date DESC")
+    suspend fun getAllLogsSync(): List<ActivityLog>
 }

@@ -1,46 +1,71 @@
 ```
-# Android
-*.apk
-*.aar
-*.ap_
-build/
-.gradle/
-local.properties
+# Compiled and build artifacts
+*.class
+*.o
+*.obj
+*.out
+*.dll
+*.so
+*.a
+*.exe
 
-# IntelliJ IDEA
+# Dependencies
+.gradle/
+build/
+target/
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+
+# Environment
+.env
+.env.local
+*.env.*
+
+# Editors
+.vscode/
 .idea/
-*.iml
-*.iws
-*.db-shm
-*.db-wal
+*.swp
+*.swo
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Coverage
+coverage/
+htmlcov/
+.coverage
+
+# Python specific
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg-info/
+.eggs/
+
+# Java/Kotlin specific
+*.class
+*.jar
+*.war
+*.ear
+hs_err_pid*
+.recommenders
 
 # Gradle
 .gradle/
-gradle-app.setting
 build/
 
-# Log files
-*.log
-
-# Local configuration file (sdk path, signing keys, etc)
+# Android
+*.apk
+*.aar
 local.properties
-
-# Android Studio Navigation editor temp files
-.navigation/
-
-# External native build folder generated in Android Studio 2.2 and later
-.externalNativeBuild/
-
-# Generated/compiled files
-*.class
-*.dex
-
-# Debug symbol data
-*/.debug/
-
-# Backup for embedded systems
-*.bak
-
-# Ignore gradle wrapper jar file
-!gradle/wrapper/gradle-wrapper.jar
+captures/
+.externalNativeBuild
+.intermediates
 ```
